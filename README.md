@@ -9,6 +9,8 @@ Please consider donating to support my work:
 
 Tweet me if you have questions: [@mikegalvin_](https://twitter.com/mikegalvin_)
 
+-Mike
+
 ## How to use
 
 Put this script in the top level domain GPO, under user configuration, log on and log off PowerShell Scripts.
