@@ -1,34 +1,55 @@
-# Logon Audit
+# Logon Audit Utility
 
-Record log on and log off events with this PowerShell script.
+Really simple log on/off auditing utility
+
+```txt
+__     _____   ____   _____  __  __     ___  __ __ _____ __ _____
+||    ((   )) (( ___ ((   )) ||\\||    ||=|| || || ||  ) ||  ||
+||__| _\\_//__ \\_|| _\\_//__|| \||    || || \\_// ||_// ||  ||
+|| ||  ||   || ||    ||  ||   \\//
+\\_//  ||   || ||__| ||  ||    //   Mike Galvin   https://gal.vin
+                                         Version 20.03.11 🐤
+```
+
+For full instructions and documentation, [visit my site.](https://gal.vin/2020/03/12/logon-audit-utility/)
 
 Please consider donating to support my work:
 
-* You can support me on a monthly basis [using Patreon.](https://www.patreon.com/mikegalvin)
-* You can support me with a one-time payment [using PayPal](https://www.paypal.me/digressive) or by [using Kofi.](https://ko-fi.com/mikegalvin)
+* Sign up [using Patreon.](https://www.patreon.com/mikegalvin)
+* Support with a one-time payment [using PayPal.](https://www.paypal.me/digressive)
+
+Logon Audit Utility can also be downloaded from:
+
+* [The Microsoft PowerShell Gallery](https://www.powershellgallery.com/packages/Logon-Audit)
 
 Tweet me if you have questions: [@mikegalvin_](https://twitter.com/mikegalvin_)
 
 -Mike
 
-## How to use
+## Features and Requirements
 
-Put this script in the top level domain GPO, under user configuration, log on and log off PowerShell Scripts.
-Use the command line switches to record a log on or log off event.
+* The utility is meant to be run on the client machine.
+* It is ideally triggered as a logon/logoff script by a Group Policy.
+* Any files that the script needs to access should be accessible from a client device.
+* It can be used to log to a file, send to Teams or both.
+* The utility requires at least PowerShell 5.0.
+* This utility has been tested on Windows 10, Windows Server 2019, Windows Server 2016 and Windows Server 2012 R2.
 
 ### Configuration
 
-Configure the location of the log file. A hidden share is recommended, and "Authenticated Users" should
-have share and file permissions set to full control.
+Here’s a list of all the command line switches and example configurations.
+
+| Command Line Switch | Description | Example |
+| ------------------- | ----------- | ------- |
+| -Logon | Use this option to log a log on event. | N/A |
+| -Logoff | Use this option to log a log off event. | N/A |
+| -Teams | The path to a txt file containing the webhook to your Teams instance. Use this option to send a configured event to teams as well as a log file. | \\\server\share\webhook.txt |
+| -L | The path to output the log file to. The file name will be Logon-Audit.log. Do not add a trailing \ backslash. | \\\server\share |
+
+### Example
 
 ``` txt
--Logon
+Logon-Audit.ps1 -Logon -L \\server\share -Teams \\server\share\webhook.txt
 ```
 
-Record a log on event to the configured log file.
-
-``` txt
--Logoff
-```
-
-Record a log off event to the configured log file.
+The above command will record a logon event for the currently logged on user to the log file and also to Teams.
