@@ -1,6 +1,6 @@
 ﻿<#PSScriptInfo
 
-.VERSION 20.03.12
+.VERSION 20.03.20
 
 .GUID 8ce1ea39-7421-4190-8d59-267612fb0727
 
@@ -10,11 +10,11 @@
 
 .COPYRIGHT (C) Mike Galvin. All rights reserved.
 
-.TAGS 
+.TAGS Logon Event Audit Microsoft Teams Webhook
 
 .LICENSEURI
 
-.PROJECTURI 
+.PROJECTURI https://gal.vin/2020/03/12/logon-audit-utility
 
 .ICONURI
 

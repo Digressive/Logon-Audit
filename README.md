@@ -8,7 +8,7 @@ __     _____   ____   _____  __  __     ___  __ __ _____ __ _____
 ||__| _\\_//__ \\_|| _\\_//__|| \||    || || \\_// ||_// ||  ||
 || ||  ||   || ||    ||  ||   \\//
 \\_//  ||   || ||__| ||  ||    //   Mike Galvin   https://gal.vin
-                                         Version 20.03.12 🐤
+                                         Version 20.03.20 🐤
 ```
 
 For full instructions and documentation, [visit my site.](https://gal.vin/2020/03/12/logon-audit-utility/)
