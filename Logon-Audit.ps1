@@ -1,6 +1,6 @@
 ﻿<#PSScriptInfo
 
-.VERSION 20.03.20
+.VERSION 20.07.17
 
 .GUID 8ce1ea39-7421-4190-8d59-267612fb0727
 
@@ -82,13 +82,13 @@ Function Get-DateFormat
 }
 
 ## Function for logging.
-Function Write-Log($Type,$Event)
+Function Write-Log($Type,$Evt)
 {
     If ($Type -eq "Logon")
     {
         If ($Null -ne $LogPath)
         {
-            Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGON] $Event"
+            Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGON] $Evt"
         }
     }
 
@@ -96,7 +96,7 @@ Function Write-Log($Type,$Event)
     {
         If ($Null -ne $LogPath)
         {
-            Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGOFF] $Event"
+            Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGOFF] $Evt"
         }
     }
 }
@@ -104,7 +104,7 @@ Function Write-Log($Type,$Event)
 # If the -logon switch is used, register it as a logon.
 If ($Logon)
 {
-    Write-Log -Type Logon -Event "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
+    Write-Log -Type Logon -Evt "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
 
     If ($Twh)
     {
@@ -115,7 +115,7 @@ If ($Logon)
 # If the -logon switch is used, register it as a logoff.
 If ($Logoff)
 {
-    Write-Log -Type Logoff -Event "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
+    Write-Log -Type Logoff -Evt "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
 
     If ($Twh)
     {
