@@ -11,7 +11,7 @@ __     _____   ____   _____  __  __     ___  __ __ _____ __ _____
                                          Version 20.07.17
 ```
 
-For full instructions and documentation, [visit my site.](https://gal.vin/2020/03/12/logon-audit-utility/)
+For full instructions and documentation, [visit my site.](https://gal.vin/posts/logon-audit-utility/)
 
 Please consider donating to support my work:
 
