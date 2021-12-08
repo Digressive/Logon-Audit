@@ -8,7 +8,7 @@ __     _____   ____   _____  __  __     ___  __ __ _____ __ _____
 ||__| _\\_//__ \\_|| _\\_//__|| \||    || || \\_// ||_// ||  ||
 || ||  ||   || ||    ||  ||   \\//
 \\_//  ||   || ||__| ||  ||    //   Mike Galvin   https://gal.vin
-                                         Version 20.07.17
+                                         Version 21.12.08
 ```
 
 For full instructions and documentation, [visit my site.](https://gal.vin/posts/logon-audit-utility/)
@@ -43,8 +43,8 @@ Here’s a list of all the command line switches and example configurations.
 | ------------------- | ----------- | ------- |
 | -Logon | Use this option to log a log on event. | N/A |
 | -Logoff | Use this option to log a log off event. | N/A |
-| -Teams | The path to a txt file containing the webhook to your Teams instance. Use this option to send a configured event to teams as well as a log file. | \\\server\share\webhook.txt |
-| -L | The path to output the log file to. The file name will be Logon-Audit.log. Do not add a trailing \ backslash. | \\\server\share |
+| -Teams | The path to a txt file containing the webhook to your Teams instance. Use this option to send a configured event to teams as well as a log file. | ```\\server\share\webhook.txt``` |
+| -L | The path to output the log file to. The file name will be Logon-Audit.log. Do not add a trailing \ backslash. | ```\\server\share``` |
 
 ### Example
 
