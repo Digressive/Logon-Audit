@@ -2,15 +2,6 @@
 
 Really simple log on/off auditing utility
 
-```txt
-__     _____   ____   _____  __  __     ___  __ __ _____ __ _____
-||    ((   )) (( ___ ((   )) ||\\||    ||=|| || || ||  ) ||  ||
-||__| _\\_//__ \\_|| _\\_//__|| \||    || || \\_// ||_// ||  ||
-|| ||  ||   || ||    ||  ||   \\//
-\\_//  ||   || ||__| ||  ||    //   Mike Galvin   https://gal.vin
-                                         Version 21.12.08
-```
-
 For full instructions and documentation, [visit my site.](https://gal.vin/posts/logon-audit-utility/)
 
 Please consider donating to support my work:
