@@ -2,7 +2,7 @@
 
 Really simple log on/off auditing utility
 
-For full instructions and documentation, [visit my site.](https://gal.vin/posts/logon-audit-utility/)
+For full instructions and documentation, [visit my site.](https://gal.vin/utils/logon-audit-utility/)
 
 Please consider donating to support my work:
 

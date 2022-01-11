@@ -14,7 +14,7 @@
 
 .LICENSEURI
 
-.PROJECTURI https://gal.vin/posts/logon-audit-utility
+.PROJECTURI https://gal.vin/utils/logon-audit-utility/
 
 .ICONURI
 
