@@ -36,6 +36,7 @@ Here’s a list of all the command line switches and example configurations.
 | -Logoff | Use this option to log a log off event. | N/A |
 | -Teams | The path to a txt file containing the webhook to your Teams instance. Use this option to send a configured event to teams as well as a log file. | ```\\server\share\webhook.txt``` |
 | -L | The path to output the log file to. The file name will be Logon-Audit.log. Do not add a trailing \ backslash. | ```\\server\share``` |
+| -Help | Show usage instructions. | N/A |
 
 ## Example
 

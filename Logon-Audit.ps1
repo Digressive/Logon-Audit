@@ -55,7 +55,6 @@
 
     .EXAMPLE
     Logon-Audit.ps1 -Logon -L \\server\share -Teams \\server\share\webhook.txt
-
     The above command will record a logon event for the currently logged on user to the log file and also to Teams.
 #>
 
@@ -69,7 +68,8 @@ Param(
     [ValidateScript({Test-Path -Path $_ -PathType Leaf})]
     [string]$Twh,
     [switch]$Logon,
-    [switch]$Logoff)
+    [switch]$Logoff,
+    [switch]$Help)
 
 If ($PSBoundParameters.Values.Count -eq 0 -or $Help)
 {
