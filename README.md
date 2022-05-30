@@ -26,7 +26,7 @@ Join the [Discord](http://discord.gg/5ZsnJ5k) or Tweet me if you have questions:
 * The utility requires at least PowerShell 5.0.
 * This utility has been tested on Windows 10, Windows Server 2019, Windows Server 2016 and Windows Server 2012 R2.
 
-### Configuration
+## Configuration
 
 Here’s a list of all the command line switches and example configurations.
 
@@ -37,7 +37,7 @@ Here’s a list of all the command line switches and example configurations.
 | -Teams | The path to a txt file containing the webhook to your Teams instance. Use this option to send a configured event to teams as well as a log file. | ```\\server\share\webhook.txt``` |
 | -L | The path to output the log file to. The file name will be Logon-Audit.log. Do not add a trailing \ backslash. | ```\\server\share``` |
 
-### Example
+## Example
 
 ``` txt
 Logon-Audit.ps1 -Logon -L \\server\share -Teams \\server\share\webhook.txt
