@@ -1,6 +1,6 @@
 ﻿<#PSScriptInfo
 
-.VERSION 21.12.08
+.VERSION 22.05.30
 
 .GUID 8ce1ea39-7421-4190-8d59-267612fb0727
 
@@ -50,6 +50,9 @@
     The file name will be Logon-Audit.log
     Do not add a trailing \ backslash.
 
+    .PARAMETER Help
+    Show usage help in the command line.
+
     .EXAMPLE
     Logon-Audit.ps1 -Logon -L \\server\share -Teams \\server\share\webhook.txt
 
@@ -68,100 +71,111 @@ Param(
     [switch]$Logon,
     [switch]$Logoff)
 
-## If logging is configured, set the log file name.
-If ($LogPath)
+If ($PSBoundParameters.Values.Count -eq 0 -or $Help)
 {
-    $LogFile = "Logon-Audit-new.log"
-    $Log = "$LogPath\$LogFile"
+    Write-Host -Object "Usage:
+    From a terminal run: [path\]Logon-Audit.ps1 -Logon OR -Logoff -L [path] -Teams [path\]webhook.txt
+    The above command will record a logon event for the currently logged on user to the log file and also to Teams.
+"
 }
 
-## Function to get date in specific format.
-Function Get-DateFormat
-{
-    Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-}
+else {
 
-## Function for logging.
-Function Write-Log($Type,$Evt)
-{
-    If ($Type -eq "Logon")
+    ## If logging is configured, set the log file name.
+    If ($LogPath)
     {
-        If ($Null -ne $LogPath)
+        $LogFile = "Logon-Audit.log"
+        $Log = "$LogPath\$LogFile"
+    }
+
+    ## Function to get date in specific format.
+    Function Get-DateFormat
+    {
+        Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    }
+
+    ## Function for logging.
+    Function Write-Log($Type,$Evt)
+    {
+        If ($Type -eq "Logon")
         {
-            Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGON] $Evt"
-        }
-    }
-
-    If ($Type -eq "Logoff")
-    {
-        If ($Null -ne $LogPath)
-        {
-            Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGOFF] $Evt"
-        }
-    }
-}
-
-# If the -logon switch is used, register it as a logon.
-If ($Logon)
-{
-    Write-Log -Type Logon -Evt "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
-
-    If ($Twh)
-    {
-        $EStatus = "Logon"
-    }
-}
-
-# If the -logon switch is used, register it as a logoff.
-If ($Logoff)
-{
-    Write-Log -Type Logoff -Evt "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
-
-    If ($Twh)
-    {
-        $EStatus = "Logoff"
-    }
-}
-
-# If the teams switch is used, get the webhook uri from the txt file.
-If ($Twh)
-{
-    $uri = Get-Content $Twh
-
-    # Create an array for the results.
-    $ResultArr = @()
-
-    $ResultArr += New-Object PSObject -Property @{
-        facts = @(
-            @{
-                name = 'User:'
-                value = $env:username
-            },
-            @{
-                name = 'Event:'
-                value = $EStatus
-            },
-            @{
-                name = 'Device:'
-                value = $env:COMPUTERNAME
-            },
-            @{
-                name = 'Domain:'
-                value = $env:userdomain
+            If ($LogPath)
+            {
+                Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGON] $Evt"
             }
-        )
-    }
-
-    # If the result is not empty, put array together for sending to teams.
-    If ($Null -ne $ResultArr)
-    {
-        $Body = ConvertTo-Json -Depth 8 @{
-        text  = "An event occurred."
-        sections = $ResultArr
-        title = "Logon Audit Utility"
         }
 
-        Invoke-RestMethod -Uri $Uri -Method Post -body $Body -ContentType 'application/json'
+        If ($Type -eq "Logoff")
+        {
+            If ($LogPath)
+            {
+                Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGOFF] $Evt"
+            }
+        }
+    }
+
+    # If the -logon switch is used, register it as a logon.
+    If ($Logon)
+    {
+        Write-Log -Type Logon -Evt "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
+
+        If ($Twh)
+        {
+            $EStatus = "Logon"
+        }
+    }
+
+    # If the -logon switch is used, register it as a logoff.
+    If ($Logoff)
+    {
+        Write-Log -Type Logoff -Evt "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
+
+        If ($Twh)
+        {
+            $EStatus = "Logoff"
+        }
+    }
+
+    # If the teams switch is used, get the webhook uri from the txt file.
+    If ($Twh)
+    {
+        $uri = Get-Content $Twh
+
+        # Create an array for the results.
+        $ResultArr = @()
+
+        $ResultArr += New-Object PSObject -Property @{
+            facts = @(
+                @{
+                    name = 'User:'
+                    value = $env:username
+                },
+                @{
+                    name = 'Event:'
+                    value = $EStatus
+                },
+                @{
+                    name = 'Device:'
+                    value = $env:COMPUTERNAME
+                },
+                @{
+                    name = 'Domain:'
+                    value = $env:userdomain
+                }
+            )
+        }
+
+        # If the result is not empty, put array together for sending to teams.
+        If ($Null -ne $ResultArr)
+        {
+            $Body = ConvertTo-Json -Depth 8 @{
+            text  = "An event occurred."
+            sections = $ResultArr
+            title = "Logon Audit Utility"
+            }
+
+            Invoke-RestMethod -Uri $Uri -Method Post -body $Body -ContentType 'application/json'
+        }
     }
 }
 
