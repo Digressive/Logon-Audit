@@ -82,8 +82,11 @@ If ($PSBoundParameters.Values.Count -eq 0 -or $Help)
 else {
 
     ## If logging is configured, set the log file name.
-    If ($LogPath)
+    If ($LogPathUsr)
     {
+        ## Clean User entered string
+        $LogPath = $LogPathUsr.trimend('\')
+
         $LogFile = "Logon-Audit.log"
         $Log = "$LogPath\$LogFile"
     }
@@ -99,7 +102,7 @@ else {
     {
         If ($Type -eq "Logon")
         {
-            If ($LogPath)
+            If ($LogPathUsr)
             {
                 Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGON] $Evt"
             }
@@ -107,7 +110,7 @@ else {
 
         If ($Type -eq "Logoff")
         {
-            If ($LogPath)
+            If ($LogPathUsr)
             {
                 Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGOFF] $Evt"
             }
