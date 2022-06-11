@@ -62,8 +62,7 @@
 [CmdletBinding()]
 Param(
     [alias("L")]
-    [ValidateScript({Test-Path $_ -PathType 'Container'})]
-    $LogPath,
+    $LogPathUsr,
     [Alias("Teams")]
     [ValidateScript({Test-Path -Path $_ -PathType Leaf})]
     [string]$Twh,
@@ -80,12 +79,17 @@ If ($PSBoundParameters.Values.Count -eq 0 -or $Help)
 }
 
 else {
-
     ## If logging is configured, set the log file name.
     If ($LogPathUsr)
     {
         ## Clean User entered string
         $LogPath = $LogPathUsr.trimend('\')
+
+        ## Make sure the log directory exists.
+        If ((Test-Path -Path $LogPath) -eq $False)
+        {
+            New-Item $LogPath -ItemType Directory -Force | Out-Null
+        }
 
         $LogFile = "Logon-Audit.log"
         $Log = "$LogPath\$LogFile"
@@ -115,6 +119,22 @@ else {
                 Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [LOGOFF] $Evt"
             }
         }
+
+        If ($Type -eq "Err")
+        {
+            If ($LogPathUsr)
+            {
+                Add-Content -Path $Log -Encoding ASCII -Value "$(Get-DateFormat) [ERROR] $Evt"
+            }
+
+            Write-Host -ForegroundColor Red -BackgroundColor Black -Object "$(Get-DateFormat) [ERROR] $Evt"
+        }
+    }
+
+    If ($Logon -eq $false -And $Logoff -eq $false)
+    {
+        Write-Log -Type Err -Evt "Not Configured to do anything. Specify -Logon or -Logoff."
+        Exit
     }
 
     # If the -logon switch is used, register it as a logon.
