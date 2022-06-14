@@ -33,29 +33,8 @@
     Logon Audit Utility - Really simple log on/off auditing utility
 
     .DESCRIPTION
-    Log user log on and off activity to a txt file as well as Teams.
-
-    .PARAMETER Logon
-    Use this option to log a log on event.
-
-    .PARAMETER Logoff
-    Use this option to log a log off event.
-
-    .PARAMETER Teams
-    The path to a txt file containing the webhook to your Teams instance.
-    Use this option to send a configured event to teams as well as a log file.
-
-    .PARAMETER L
-    The path to output the log file to.
-    The file name will be Logon-Audit.log
-    Do not add a trailing \ backslash.
-
-    .PARAMETER Help
-    Show usage help in the command line.
-
-    .EXAMPLE
-    Logon-Audit.ps1 -Logon -L \\server\share -Teams \\server\share\webhook.txt
-    The above command will record a logon event for the currently logged on user to the log file and also to Teams.
+    Log user log on and off activity to a txt file and optionally to Teams.
+    Run with -help or no arguments for usage.
 #>
 
 ## Set up command line switches.
@@ -73,8 +52,11 @@ Param(
 If ($PSBoundParameters.Values.Count -eq 0 -or $Help)
 {
     Write-Host -Object "Usage:
-    From a terminal run: [path\]Logon-Audit.ps1 -Logon OR -Logoff -L [path] -Teams [path\]webhook.txt
+    From a terminal run: [path\]Logon-Audit.ps1 -Logon -L [path]
     The above command will record a logon event for the currently logged on user to the log file and also to Teams.
+
+    Use -Logoff to log a logoff event.
+    Use -Teams [path\]webhook.txt to send events to Teams via webhook.
 "
 }
 
