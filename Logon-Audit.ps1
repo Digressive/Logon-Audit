@@ -1,6 +1,6 @@
 ﻿<#PSScriptInfo
 
-.VERSION 22.05.30
+.VERSION 23.04.28
 
 .GUID 8ce1ea39-7421-4190-8d59-267612fb0727
 
@@ -42,9 +42,9 @@
 Param(
     [alias("L")]
     $LogPathUsr,
-    [Alias("Teams")]
+    [Alias("Webhook")]
     [ValidateScript({Test-Path -Path $_ -PathType Leaf})]
-    [string]$Twh,
+    [string]$Webh,
     [switch]$Logon,
     [switch]$Logoff,
     [switch]$Help)
@@ -56,7 +56,9 @@ If ($PSBoundParameters.Values.Count -eq 0 -or $Help)
     The above command will record a logon event for the currently logged on user to the log file and also to Teams.
 
     Use -Logoff to log a logoff event.
-    Use -Teams [path\]webhook.txt to send events to Teams via webhook.
+    
+    To send events to a webhook:
+    Specify a txt file containing the webhook URI with -Webhook [path\]webhook.txt
 "
 }
 
@@ -124,7 +126,7 @@ else {
     {
         Write-Log -Type Logon -Evt "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
 
-        If ($Twh)
+        If ($Webh)
         {
             $EStatus = "Logon"
         }
@@ -135,16 +137,16 @@ else {
     {
         Write-Log -Type Logoff -Evt "Device: $env:COMPUTERNAME, Domain: $env:userdomain, Username: $env:username"
 
-        If ($Twh)
+        If ($Webh)
         {
             $EStatus = "Logoff"
         }
     }
 
     # If the teams switch is used, get the webhook uri from the txt file.
-    If ($Twh)
+    If ($Webh)
     {
-        $uri = Get-Content $Twh
+        $uri = Get-Content $Webh
 
         # Create an array for the results.
         $ResultArr = @()
