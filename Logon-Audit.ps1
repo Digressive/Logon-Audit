@@ -12,7 +12,7 @@
 
 .TAGS Logon Event Audit Microsoft Teams Webhook
 
-.LICENSEURI
+.LICENSEURI https://github.com/Digressive/Logon-Audit?tab=MIT-1-ov-file
 
 .PROJECTURI https://gal.vin/utils/logon-audit-utility/
 
